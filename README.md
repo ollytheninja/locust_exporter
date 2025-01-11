@@ -33,10 +33,11 @@ Run the exporter with:
 
 ![example metrics response](./docs/locust_exporter.png)
 
-## Contributions
+## Acknowledgements
 
 This project is forked from [mbolek/locust_exporter](https://github.com/mbolek/locust_exporter)
 
 Includes cherry-picked contributions to the original project:
 - [rewrite to more modern client_python version](https://github.com/nobusugi246/locust-exporter/commit/a08cbe780ce4511ba234775ad219e30aedd6fe5a#diff-84efe67fd91a0d0c078d0ca120f5537bf4b12c7ba424e68329d5354df438be47R52) from [nobusugi246](https://github.com/nobusugi246).
 - [percentiles](https://github.com/dduleba/locust_exporter/commit/ec709fdd8c6791476ee6891748d1aa48b658d0de) from [dduleba](https://github.com/dduleba).
+- [fix for locust 0.12.2](https://github.com/lrouquette/locust_exporter/commit/1a575c691278787176688ef4edf6deb9b4b0df32) from [lrouquette](https://github.com/lrouquette).
