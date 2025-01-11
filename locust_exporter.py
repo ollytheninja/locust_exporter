@@ -1,22 +1,26 @@
 import json
+import logging
+import os
 import sys
 import time
 
 import requests
 from prometheus_client import start_http_server, Metric, REGISTRY
 
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
 class LocustCollector:
-    def __init__(self, ep):
-        self._ep = ep
+    def __init__(self, uri):
+        self._uri = uri
 
     def collect(self):
         # Fetch the JSON
-        url = "http://" + self._ep + "/stats/requests"
+        url = self._uri + "/stats/requests"
         try:
             response = requests.get(url).content.decode("Utf-8")
         except requests.exceptions.ConnectionError:
-            print("Failed to connect to Locust:", url)
+            logger.error("Failed to connect to Locust:", url)
             exit(2)
 
         response = json.loads(response)
@@ -84,17 +88,13 @@ class LocustCollector:
 
 
 if __name__ == "__main__":
-    # Usage: locust_exporter.py <port> <locust_host:port>
-    if len(sys.argv) != 3:
-        print("Usage: locust_exporter.py <port> <locust_host:port>")
-        exit(1)
+    listen_port = os.environ.get("LISTEN_PORT", 8088)
+    locust_uri = os.environ.get("LOCUST_URI", "http://localhost:8089")
 
     try:
-        server_port = int(sys.argv[1])
-        locust_host_port = str(sys.argv[2])
-        start_http_server(server_port)
-        REGISTRY.register(LocustCollector(locust_host_port))
-        print("Connecting to locust on: " + sys.argv[2])
+        start_http_server(listen_port)
+        REGISTRY.register(LocustCollector(locust_uri))
+        logger.info("Connecting to locust at: " + locust_uri)
         while True:
             time.sleep(1)
 

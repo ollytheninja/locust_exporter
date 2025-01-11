@@ -1,18 +1,34 @@
-# locust_exporter
-A locust exporter for prometheus
+# Prometheus Metrics Exporter for Locust
 
-This is a simple exporter for http://locust.io metrics. You get all the necessary details about current tests and the state of the locust.
+A locust exporter for prometheus, forked from [mbolek/locust_exporter](https://github.com/mbolek/locust_exporter)
 
-Errors and requests stats are added with the method and path labels - BE CAREFUL - if you have a lot of endpoints. It is probably better to group the endpoints in your locustfile (please see: http://docs.locust.io/en/latest/writing-a-locustfile.html#grouping-requests-to-urls-with-dynamic-parameters).
+This is a simple exporter for http://locust.io metrics.
+You get all the necessary details about current tests and the state of the locust.
 
-Requirements: prometheus_client (sudo pip install prometheus_client)
+Errors and requests stats are added with the method and path labels - BE CAREFUL - if you have a lot of endpoints.
+It is probably better to group the endpoints in your locustfile (please
+see: http://docs.locust.io/en/latest/writing-a-locustfile.html#grouping-requests-to-urls-with-dynamic-parameters).
 
-Running the exporter:
+## Setup
 
-`./locust_exporter.py <listen_port> <locust_host:port>`
+This project uses [UV](https://docs.astral.sh/uv/).
 
-i.e.:
+- Install uv
+- run `uv sync`
+- You can now `uv run locust_exporter.py <listen_port> <locust_host:port>`
 
-`./locust_exporter.py 1234 localhost:8089`
+## Usage
 
-![](https://github.com/mbolek/locust_exporter/blob/master/locust_exporter.png)
+Run the exporter with:
+
+`./locust_exporter.py`
+
+## Configuration
+
+| Environment Variable | Description                          | Default                 |
+|:---------------------|:-------------------------------------|:------------------------|
+| `LOCUST_URI`         | The locust address to connect to     | `http://localhost:8089` |
+| `LISTEN_PORT`        | The port the exporter will listen on | `8088`                  |
+
+
+![example metrics response](./docs/locust_exporter.png)
