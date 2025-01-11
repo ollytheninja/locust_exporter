@@ -1,0 +1,17 @@
+[project]
+name = "locust_exporter"
+version = "0.1.0"
+description = ""
+readme = "README.md"
+package-mode = false
+requires-python = ">=3.9"
+
+dependencies = [
+    "prometheus-client",
+    "requests",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.9.1",
+]
